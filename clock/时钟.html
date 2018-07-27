@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>demo</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+    <style>
+      div{
+        background: url(images/clock.jpg);
+        width: 600px;
+        height: 600px;
+        margin:100px auto;
+        position: relative;
+      }
+      .hour,.second,.minute{
+        position: absolute;
+        left:50%;
+        margin-left: -15px;
+      }
+    </style>
+    <script>
+        window.onload = function(){
+          var sec = document.getElementById("second");
+          var hou = document.getElementById("hour");
+          var min = document.getElementById("minute");
+          var second = 0,minute = 0, hour = 0, ms = 0;
+
+          setInterval(function clock(){
+            var date = new Date();
+            var ms =date.getMilliseconds();
+            var second = date.getSeconds() + ms / 1000;
+            var minute = date.getMinutes() + second/60;
+            var hour = date.getHours() % 12 + minute/60; //主要是24时；
+            sec.style.WebkitTransform = "rotate("+second*6+"deg)";
+            min.style.WebkitTransform = "rotate("+minute*6+"deg)";
+            hou.style.WebkitTransform = "rotate("+hour*30+"deg)";
+          }, 500)  
+        }
+    </script>
+  </head>
+  <body>
+      <div>
+        <img class="hour" id="hour" src="images/hour.png" height="600" width="30" alt="">
+        <img class="minute" id="minute" src="images/minute.png" height="600" width="30" alt="">
+        <img class="second" id="second" src="images/second.png" height="600" width="30" alt="">
+      </div>
+  </body>
+</html>
