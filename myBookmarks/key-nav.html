@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>key-nav</title>
+    <link rel="stylesheet" href="./key-nav.css">
+    <script src="./key-nav.js"></script>
+</head>
+
+<body>
+    <main id="keyBor"></main>
+</body>
+<script>
+    //1 . 初始化数据
+    init();
+    var aArr = init().aArr;
+    var oHash = init().oHash;
+
+
+    //2 . 创建键盘
+    keyboard(aArr,oHash);
+   
+    //3 . 键盘触发事件
+    document.onkeypress = function (event) {
+        var key = event['key'];
+        var web = oHash[key];
+        window.open('http://' + web)
+    }
+</script>
+
+</html>

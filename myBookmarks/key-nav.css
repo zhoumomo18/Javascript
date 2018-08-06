@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: url('bak.jpg') no-repeat center;
+    background-size:cover;
+    height: 100vh;  
+}
+
+#keyBor {
+    text-align: center;
+    position: relative;
+    top: 15%;
+}
+
+.key {
+    position: relative;
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
+    background-color: rgba(219, 87, 5, 1);
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 600;
+    font-size: 1.3em;
+    display: inline-block;
+    padding: 4px;
+    border-radius: 8px;
+    box-shadow: 0px 9px 0px rgba(219, 31, 5, 1), 0px 9px 25px rgba(0, 0, 0, .7);
+    margin: 30px 15px;
+    width: 100px;
+    height: 60px;
+    transition: all .1s ease;
+    text-transform: uppercase;
+}
+
+.key:active {
+    box-shadow: 0px 3px 0px rgba(219, 31, 5, 1), 0px 3px 6px rgba(0, 0, 0, .9);
+    position: relative;
+    top: 6px;
+}
+
+.key>span {
+    position: absolute;
+    left: 15px;
+    top: 4px;
+
+}
+
+.key>img {
+    position: absolute;
+    left: 15px;
+    bottom: 6px;
+    width: 20px;
+    height: 20px;
+}
+
+.key > button {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    border:0px;
+    background-color:rgba(255, 255, 255, 0.9);
+    color: orange;
+    border-radius: 5px;
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查找与替换</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 800px;
+            height:700px;
+            background: #ccc;
+            margin: 100px auto;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .box>.operation {
+            width: 500px;
+            height: 80px;
+            border: 5px solid rgb(124, 124, 139);
+            border-radius: 5px;
+            position: absolute;
+            bottom:80px;
+            left: 80px;
+            box-sizing: border-box;
+            padding: 12px;
+        }
+        .box>.content {
+            width: 500px;
+            height: 360px;
+            background: #fff;
+            box-shadow: 5px 5px 10px black;
+            position: absolute;
+            left: 80px;
+            top: 100px;
+            box-sizing: border-box;
+            padding:20px ;
+
+        }
+        .box>.list {
+            position: absolute;
+            right: 90px;
+            background: blue;
+            color: wheat;
+            top: 150px;
+        }
+
+        .box >.list,.lis{
+            width: 80px;
+            border-radius: 6px;
+            line-height: 50px;
+            list-style: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .box .lis{
+            display: none;
+        }
+        .box .lis li {
+           color: white;
+           background: #999; 
+        }
+        .dis-l{
+            display: inline;
+        }
+        .dis-n {
+            display: none;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="content">
+            <p>1992年春节后，我在北京一间只有八平米的平房里开始写作《活着》，秋天的时候在上海华东师大招待所的一个房间里修改定稿。最初的时候我是用旁观者的角度来写作福贵的一生，可是困难重重，我的写作难以为继；有一天我突然从第一人称的角度出发，让福贵出来讲述自己的生活，于是奇迹出现了，同样的构思，用第三人称的方式写作时无法前进，用第一人称的方式写作后竟然没有任何阻挡，我十分顺利地写完了《活着》。
+
+                    《活着》讲述了一个人和他命运之间的友情，这是最为感人的友情，他们互相感激，同时也互相仇恨，他们谁也无法抛弃对方，同时谁也没有理由抱怨对方，《活着》讲述人如何去承受巨大的苦难，就像千钧一发，让一根头发去承受三万斤的重量，它没有断，《活着》讲述了眼泪的丰富和宽广，讲述了绝望的不存在，讲述了人是为了活着本身而活着，而不是为了活着之外的任何事物而活着。
+                    
+                    ——余华</p>
+        </div>
+        <div class="operation">
+            <p>
+                <span>查找</span>
+                <span>替换</span>
+            </p>
+            <hr>
+            <div class="find dis-n">
+                    <input type="text">
+                    <button>查找</button>
+            </div>
+            <div class="replace dis-n">
+                    <input type="text">
+                    <input type="text">
+                    <button>替换</button>
+            </div>
+        </div>
+        <ul class="list">
+            <li id="btn-unfold">展开
+                <ul class="lis">
+                    <li>查找</li>
+                    <li>替换</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</body>
+    <script>
+        var oUnfold = document.getElementById("btn-unfold")
+        var oLis = document.querySelector(".lis");
+        var oOperation= document.querySelector(".operation");
+        var oLi1 = document.getElementsByTagName("li")[1];
+        var oLi2 = document.getElementsByTagName("li")[2];
+        var oLis = document.querySelector(".lis");
+
+        oUnfold.onclick = function () {
+            oLis.style.display="inline"
+        }
+        
+
+    </script>
+</html>
