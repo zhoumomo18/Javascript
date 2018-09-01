@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>简单轮播</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        ul {
+            list-style-type: none;
+            display: flex;
+            width: 300px;
+            transition: all 0.5s;
+        }
+
+        button {
+            margin: 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        img {
+            width: 300px;
+            height: 200px;
+        }
+
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <ul>
+            <li>
+                <img src="a_375653511.jpg" alt="">
+            </li>
+            <li>
+                <img src="2.JPG" alt="">
+            </li>
+            <li>
+                <img src="3.jpg" alt="">
+            </li>
+            <li>
+                <img src="4.jpg" alt="">
+            </li>
+        </ul>
+    </div>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+</body>
+<script>
+    let btns = $('button');
+    let n = 0
+    let size = btns.length
+
+    for (let i = 0; i < btns.length; i++) {
+        $(btns[i]).on('click', (event) => {
+            let index = $(event.currentTarget).index()
+            let p = -300 * (index - 1)
+            $('ul').css({
+                transform: 'translate(' + p + 'px)'
+            })
+            n = index - 1
+            activeButton(btns.eq(n))
+        })
+    }
+    
+    let timer = setTimer()
+
+    $('#box').on('mouseenter', function () {
+        clearInterval(timer)        
+    })
+    $('#box').on('mouseleave', function () {
+        timer = setTimer()       
+    })
+
+    function setTimer() {
+        return setInterval(() => {
+            n++
+            btns.eq(n % size).trigger('click')
+        }, 1500)
+    }
+
+    function activeButton($button) {
+        $button
+            .addClass('red')
+            .siblings('.red').removeClass('red')
+    }
+</script>
+
+</html>
