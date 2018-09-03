@@ -78,7 +78,7 @@
                 transform: 'translate(' + p + 'px)'
             })
             n = index - 1
-            activeButton(btns.eq(n))
+            activeButton(btns.eq(n))           
         })
     }
     
@@ -87,6 +87,8 @@
     $('#box').on('mouseenter', function () {
         clearInterval(timer)        
     })
+
+
     $('#box').on('mouseleave', function () {
         timer = setTimer()       
     })

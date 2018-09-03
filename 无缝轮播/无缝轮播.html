@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            display: flex;
+            justify-content: center;
+            margin-top: 100px;
+
+        }
+
+        ul {
+            position: relative;
+            list-style-type: none;
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        li {
+            position: absolute;
+            transition: all 2s;
+        }
+
+        img {
+            width: 600px;
+            height: 400px;
+        }
+
+        .deng {
+            transform: translate(100%);
+        }
+
+        .zhong {
+            transform: translateX(0);
+            z-index: 1;
+        }
+
+        .wei {
+            transform: translateX(-100%);
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <ul>
+            <li class="">
+                <img src="a.jpg" alt="">
+            </li>
+            <li class="">
+                <img src="b.jpg" alt="">
+            </li>
+            <li class="">
+                <img src="c.jpg" alt="">
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    let list = $('ul>li')
+    let n = 0
+    let timer
+
+    init()//初始化
+
+    startTimer()//定时器执行
+
+    document.addEventListener('visibilitychange', (e) => {
+        document.hidden ? window.clearInterval(timer) : startTimer()
+    })//状态判断
+
+
+    function startTimer() {
+        timer = setInterval(() => {
+            setWei($(list[x(n)])).one('transitionend', (e) => {
+                setDeng($(e.currentTarget))
+            })
+            setZhong($(list[x(n + 1)]))
+            n++
+        }, 3000)
+    }
+
+    function x(n) {
+        if (n > list.length) {
+            n = n % list.length
+            if (n === 0) {
+                n = list.length
+            }
+        }
+        return n - 1
+    }
+
+    function init() {
+        for (let index = 0; index < list.length; index++) {
+            $(list[0]).addClass('zhong')
+            $(list[0]).siblings().addClass('deng')
+        }
+    }
+
+    function setDeng($node) {
+        $node.removeClass('wei zhong').addClass('deng')
+        return $node
+    }
+
+    function setZhong($node) {
+        $node.removeClass('deng wei').addClass('zhong')
+        return $node
+    }
+
+    function setWei($node) {
+        $node.removeClass('deng  zhong').addClass('wei')
+        return $node
+    }
+</script>
+
+</html>
