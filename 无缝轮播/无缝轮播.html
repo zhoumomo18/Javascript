@@ -13,117 +13,213 @@
             padding: 0;
         }
 
-        div {
-            display: flex;
-            justify-content: center;
-            margin-top: 100px;
-
-        }
-
-        ul {
-            position: relative;
-            list-style-type: none;
-            width: 600px;
-            height: 400px;
+        #box {
+            margin: 100px auto;
+            width: 500px;
             overflow: hidden;
+            position: relative;
         }
 
-        li {
+        #imgs {
+            display: flex;
+            transition: all 1.5s;
+        }
+
+        #s-box>span {
+            display: block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid red;
             position: absolute;
-            transition: all 2s;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        #s-box>span:nth-child(1) {
+            right: 15px;
+            top: 150px;
+        }
+
+        #s-box>span:nth-child(2) {
+            left: 15px;
+            top: 150px;
         }
 
         img {
-            width: 600px;
-            height: 400px;
+            width: 500px;
+            height: 300px;
         }
 
-        .deng {
-            transform: translate(100%);
+        #spans>span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: black;
+            text-align: center;
+            margin-right: 10px;
+            border-radius: 50%;
+            cursor: pointer;
         }
 
-        .zhong {
-            transform: translateX(0);
-            z-index: 1;
+        #spans {
+            display: flex;
+            justify-content: center;
         }
 
-        .wei {
-            transform: translateX(-100%);
-            z-index: 1;
+        #spans>span.red {
+            background: red;
+
         }
     </style>
 </head>
 
 <body>
     <div id="box">
-        <ul>
-            <li class="">
-                <img src="a.jpg" alt="">
-            </li>
-            <li class="">
-                <img src="b.jpg" alt="">
-            </li>
-            <li class="">
-                <img src="c.jpg" alt="">
-            </li>
-        </ul>
+        <div id="imgs">
+            <img src="a.jpg" alt="">
+            <img src="b.jpg" alt="">
+            <img src="c.jpg" alt="">
+            <img src="d.jpg" alt="">
+            <img src="e.jpg" alt="">
+        </div>
+        <div id="s-box">
+            <span class="right"></span>
+            <span class="left"></span>
+        </div>
+
     </div>
 </body>
-<script>
-    let list = $('ul>li')
-    let n = 0
+
+<script>  
+
+    let imgs = $('#imgs>img')
+    let box = $('#box')
+    let n = 0;
+    let lastIndex = imgs.length - 1
     let timer
 
-    init()//初始化
+    init('#imgs', box)
 
-    startTimer()//定时器执行
+    pageChange()
 
-    document.addEventListener('visibilitychange', (e) => {
-        document.hidden ? window.clearInterval(timer) : startTimer()
-    })//状态判断
+    let spans = $('#spans>span')
+    $('#spans>span').eq(0).addClass('red')
 
+    bindEvents()
 
-    function startTimer() {
+    startTimer()
+
+    Events()
+
+    function pageChange() {//判断页面的状态，防止bug
+        document.addEventListener('visibilitychange', (e) => {
+            document.hidden ? window.clearInterval(timer) : startTimer()
+        })
+    }
+
+    function activeButton($button) {//span添加颜色
+        $button
+            .addClass('red')
+            .siblings('.red').removeClass('red')
+    }
+
+    function startTimer() { //自动轮播
         timer = setInterval(() => {
-            setWei($(list[x(n)])).one('transitionend', (e) => {
-                setDeng($(e.currentTarget))
+            goToSlide(n + 1)
+        }, 2000)
+    }
+
+    function Events() {//点击和触摸事件
+        $('#box').on('mouseenter', () => {
+            window.clearInterval(timer)
+        })
+
+        $('#box').on('mouseleave', () => {
+            timer = setInterval(() => {
+                goToSlide(n + 1)
+            }, 2000)
+        })
+
+        $('#s-box>.left').on('click', function () {
+            goToSlide(n - 1)
+        })
+
+        $('#s-box>.right').on('click', function () {
+            goToSlide(n + 1)
+        })
+    }
+
+    function bindEvents() {//绑定事件
+        $('#spans').on('click', 'span', function (e) {
+            let span = $(e.currentTarget)
+            var index = span.index()
+            goToSlide(index)
+        })
+    }
+
+    function goToSlide(index) {//核心动作
+        if (index > lastIndex) {
+            index = 0
+        } else if (index < 0) {
+            index = lastIndex
+        }
+        if (index === 0 && n === lastIndex) {
+            $('#imgs').css({
+                transform: `translateX(${-500 * (lastIndex + 2)}px)`
             })
-            setZhong($(list[x(n + 1)]))
-            n++
-        }, 3000)
-    }
+                .one('transitionend', (e) => {
+                    $('#imgs').hide()
+                        .offset()
+                    $('#imgs').css({
+                        transform: `translateX(${-500 * (index + 1)}px)`
+                    }).show()
+                })
 
-    function x(n) {
-        if (n > list.length) {
-            n = n % list.length
-            if (n === 0) {
-                n = list.length
-            }
+        } else if (n === 0 && index === lastIndex) {
+
+            $('#imgs').css({
+                transform: `translateX(${-500 * (lastIndex - lastIndex)}px)`
+            }).one('transitionend', (e) => {
+                $('#imgs').hide()
+                    .offset()
+                $('#imgs').css({
+                    transform: `translateX(${-500 * (index + 1)}px)`
+                }).show()
+            })
+
+
+        } else {
+            $('#imgs').css({
+                transform: `translateX(${-500 * (index + 1)}px)`
+            })
         }
-        return n - 1
+
+        n = index
+        activeButton($(spans).eq(n))
     }
 
-    function init() {
-        for (let index = 0; index < list.length; index++) {
-            $(list[0]).addClass('zhong')
-            $(list[0]).siblings().addClass('deng')
+    function init(target, target2) {//初始化
+        cloneImg(target)
+        creatSpans(target2)
+        $('#imgs').css({
+            transform: 'translateX(-500px)'
+        })
+    }
+
+    function cloneImg(target) {//克隆，放置图片
+        $(target).append($(imgs[0]).clone())
+        $(target).prepend($(imgs[lastIndex]).clone())
+    }
+
+    function creatSpans(place) {//根据图片数量动态生成li
+        let creatDiv = $('<div id="spans"></div>')
+        let creatSpan = $('<span></span>')
+        for (let index = 0; index < imgs.length; index++) {
+            $('<span></span>').appendTo(creatDiv)
         }
+        creatDiv.appendTo(place)
     }
 
-    function setDeng($node) {
-        $node.removeClass('wei zhong').addClass('deng')
-        return $node
-    }
-
-    function setZhong($node) {
-        $node.removeClass('deng wei').addClass('zhong')
-        return $node
-    }
-
-    function setWei($node) {
-        $node.removeClass('deng  zhong').addClass('wei')
-        return $node
-    }
 </script>
 
 </html>
