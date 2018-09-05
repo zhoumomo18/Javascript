@@ -134,28 +134,27 @@
             <div class="img"></div>
             <div class="img"></div>
         </div>
-
         <div class="btns">
             <div class="left">
                 <</div>
                     <div class="right">></div>
             </div>
         </div>
+    </div>
 </body>
 <script>
     let num = 0;
     let imgItem = $('#box > .img-item')
-    let timer 
-    let timeJg =3500
+    let timer
+    let timeJg = 3500
 
     pageChange()//根据页面的状态，停止定时器
 
     init()//添加初始属性
 
     Events()//触摸停止定时器和左右点击事件
-    
-    startTimer(timeJg)//开启定时器
 
+    startTimer(timeJg)//开启定时器
 
     function init() {
         $(imgItem).each(function (index, el) {
@@ -184,22 +183,19 @@
 
         });
 
-        $('#box').hover(function () {
-            clearInterval(timer);
-        }, function () {
-            timer = startTimer(timeJg);
-        });
+        $('#box').hover( ()=>{window.clearInterval(timer)}, ()=>{startTimer(timeJg)})
     }
-    
+
     function startTimer(timeJg) {
-       timer = setInterval(()=>{move()
-       },timeJg)    
+        timer = setInterval(() => {
+            move()
+        }, timeJg)
     }
 
     function pageChange() {
         document.addEventListener('visibilitychange', () => {
-           document.hidden ? clearInterval(timer) : startTimer(timeJg)
-           
+            document.hidden ? clearInterval(timer) : startTimer(timeJg)
+
         })
     }
 </script>
